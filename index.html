@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi Cún Iuuu ❤️</title>
+    <link rel="stylesheet" href="style_intro.css">
+</head>
+<body>
+    <div id="orientation-overlay">📱 Vui lòng xoay ngang máy để xem đẹp nhất nhé!</div>
+    
+    <div class="intro-container">
+        <div class="photo-stream" id="photoStream"></div>
+        <button id="btnStart" class="btn-next" style="display:none;" onclick="window.location.href='password.html'">
+            Tiếp tục ❤️
+        </button>
+    </div>
+    <script>
+        const stream = document.getElementById('photoStream');
+        const totalPhotos = 30;
+        const interval = 0.6; // Thời gian cách nhau giữa mỗi ảnh (giây)
+
+        // Tự động tạo 30 ảnh từ cun1.jpg đến cun30.jpg
+        for (let i = 1; i <= totalPhotos; i++) {
+            let img = document.createElement('img');
+            img.src = `img/cun${i}.jpg`; // Tên file từ cun1 đến cun30
+            img.className = 'moving-photo';
+            
+            // Cài đặt thuộc tính ngẫu nhiên cho mỗi ảnh
+            img.style.animationDelay = `${(i - 1) * interval}s`;
+            img.style.top = `${Math.random() * 75 + 5}vh`; // Vị trí dọc ngẫu nhiên từ 5% đến 80%
+            
+            // Kích thước và góc xoay lộn xộn
+            const scale = 0.6 + Math.random() * 0.5;
+            const rotate = Math.random() * 40 - 20;
+            img.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+            
+            stream.appendChild(img);
+        }
+
+        // Tính toán thời gian để hiện nút "Tiếp tục" sau khi ảnh cuối cùng trôi qua một lúc
+        const waitTime = (totalPhotos * interval) + 8; 
+        setTimeout(() => {
+            const btn = document.getElementById('btnStart');
+            btn.style.display = 'block';
+        }, waitTime * 1000);
+        // Tạo bong bóng bay ngẫu nhiên
+    setInterval(() => {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        const icons = ['🎈', '💖', '✨', '🌸'];
+        balloon.innerText = icons[Math.floor(Math.random() * icons.length)];
+        balloon.style.left = Math.random() * 100 + 'vw';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 8000);
+    }, 8000 / 10); // Tạo bong bóng liên tục
+    </script>
+</body>
+</html>
