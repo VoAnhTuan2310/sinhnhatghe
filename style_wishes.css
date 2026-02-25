@@ -103,3 +103,21 @@ body::before {
     content: "✨"; position: fixed; top: 10%; left: 10%; animation: blink 2s infinite; opacity: 0.5;
 }
 @keyframes blink { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.8; } }
+.wish-scatter {
+    position: relative;
+    width: 100vw; /* Full chiều ngang thiết bị */
+    height: 60vh;
+    margin: 0 auto;
+    overflow: hidden; /* Ảnh nào bay quá rìa sẽ bị ẩn đi thay vì hiện thanh cuộn */
+}
+
+.wish-item {
+    max-width: 30vw; /* Khống chế cỡ ảnh theo tỉ lệ màn hình */
+}
+
+/* Điều chỉnh lại tọa độ để ảnh nằm trong vùng an toàn (safe zone) */
+.item-1 { left: 5%; top: 10%; }
+.item-2 { left: 55%; top: 5%; }
+.item-3 { left: 10%; top: 40%; }
+.item-4 { left: 60%; top: 45%; }
+.item-5 { left: 30%; top: 70%; }

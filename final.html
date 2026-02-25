@@ -9,76 +9,101 @@
         
         body {
             background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            height: 100vh; margin: 0; overflow: hidden;
+            min-height: 100vh; margin: 0; overflow: hidden;
             display: flex; flex-direction: column; align-items: center;
             font-family: 'Quicksand', sans-serif;
+            padding: 20px; box-sizing: border-box;
         }
 
-        h1 { color: #d63384; margin-top: 40px; font-size: 1.8rem; opacity: 0; animation: fadeIn 1s 0.5s forwards; }
+        h1 { 
+            color: #d63384; margin-top: 20px; font-size: 1.5rem; text-align: center;
+            opacity: 0; animation: fadeIn 1s 0.5s forwards; 
+            z-index: 10;
+        }
 
-        /* KHUNG CHỨA Stage: Hoa - Bánh - Thư */
+        /* KHUNG CHỨA THÔNG MINH */
         .stage {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 25px;
-            margin-top: 80px;
-            height: 200px;
-            position: relative;
+            display: flex; justify-content: center; align-items: flex-end;
+            gap: 20px; margin-top: auto; margin-bottom: auto;
+            position: relative; width: 100%; max-width: 500px;
+            height: 300px;
         }
 
-        /* 1. BÓ HOA */
-        .bouquet { font-size: 100px; opacity: 0; animation: fadeInRise 1s 1.2s forwards; line-height: 1; }
-
-        /* 2. BÁNH */
+        /* 1. ĐIỀU CHỈNH KÍCH THƯỚC VẬT THỂ */
+        .bouquet { font-size: 80px; opacity: 0; animation: fadeInRise 1s 1.2s forwards; line-height: 1; }
         .cake-box { opacity: 0; animation: fadeIn 1s 1s forwards; line-height: 1; }
-        .cake { font-size: 130px; }
+        .cake { font-size: 110px; }
 
-        /* 3. LÁ THƯ (Định vị lại hoàn toàn) */
         .envelope-container {
-            width: 80px; height: 80px;
-            position: relative;
-            display: flex; justify-content: center; align-items: center;
+            width: 80px; height: 80px; position: relative;
+            display: flex; flex-direction: column; align-items: center;
         }
 
         .envelope {
-            font-size: 75px; 
-            cursor: pointer;
-            position: absolute;
-            top: -100vh; /* Rơi từ đỉnh màn hình */
-            opacity: 0;
-            z-index: 50;
-            /* Animation rơi và sau đó nhấp nháy */
-            animation: dropFinal 1.2s 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            font-size: 65px; cursor: pointer; position: absolute;
+            top: -100vh; opacity: 0; z-index: 50;
+            animation: dropFinal 1.2s 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, 
+                       hintShake 1.5s infinite 3.5s;
         }
 
-        /* Hiệu ứng nhấp nháy nhắc click */
-        @keyframes hint {
-            0%, 100% { transform: rotate(10deg) scale(1); }
-            50% { transform: rotate(-10deg) scale(1.1); filter: drop-shadow(0 0 15px white); }
+        /* 2. TỐI ƯU CHO MÀN HÌNH ĐIỆN THOẠI (DƯỚI 600PX) */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.2rem; }
+            .stage { 
+                flex-direction: column; /* Xếp dọc trên điện thoại */
+                align-items: center; 
+                gap: 15px;
+                height: auto;
+                margin-top: 20px;
+            }
+            .bouquet { font-size: 70px; order: 2; } /* Cho hoa xuống dưới bánh */
+            .cake { font-size: 100px; order: 1; }
+            .envelope-container { order: 3; height: 70px; }
+            .envelope { font-size: 60px; }
+            .guide-box { top: -60px; }
+            .letter-popup { width: 85%; padding: 20px; }
         }
-        .envelope.active { animation: dropFinal 1.2s 2.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, hint 1.5s infinite 3.5s; }
 
-        /* 4. LỜI CHÚC */
+        /* 3. CHỈ DẪN & POPUP */
+        .guide-box {
+            position: absolute; top: -65px; text-align: center;
+            opacity: 0; animation: fadeIn 0.5s 4s forwards; pointer-events: none;
+        }
+        .arrow { font-size: 25px; color: #d63384; animation: bounceArrow 1s infinite; }
+        .guide-text { font-size: 12px; font-weight: bold; color: #d63384; background: white; padding: 4px 8px; border-radius: 8px; }
+
         .letter-popup {
             display: none; position: fixed; top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0);
             width: 320px; background: white; padding: 25px;
             border-radius: 20px; border: 2px dashed #ffafbd;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            z-index: 100; transition: 0.5s;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2); z-index: 100; transition: 0.5s;
         }
         .letter-popup.show { display: block; transform: translate(-50%, -50%) scale(1); }
-        .letter-text { color: #d63384; line-height: 1.6; }
-        .close-btn { background: #d63384; color: white; border: none; padding: 10px; border-radius: 20px; cursor: pointer; margin-top: 15px; width: 100%; font-weight: bold; }
+        .close-btn { 
+            background: linear-gradient(to right, #ff4d6d, #d63384);
+            color: white; border: none; padding: 12px; border-radius: 30px;
+            cursor: pointer; margin-top: 15px; width: 100%; font-weight: bold;
+        }
 
         /* ANIMATIONS */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInRise { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes dropFinal { 
-            0% { top: -100vh; opacity: 0; }
-            100% { top: 0; opacity: 1; transform: rotate(10deg); } 
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInRise { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes dropFinal { 0% { top: -100vh; opacity: 0; } 100% { top: 0; opacity: 1; transform: rotate(10deg); } }
+        @keyframes hintShake { 0%, 100% { transform: rotate(10deg) scale(1); } 50% { transform: rotate(-5deg) scale(1.1); } }
+        @keyframes bounceArrow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .stage {
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 15px; /* Giảm khoảng cách để gom vào giữa */
+}
+
+.cake { font-size: clamp(80px, 25vw, 150px); } /* Tự động co size theo màn hình */
+.bouquet { font-size: clamp(60px, 20vw, 120px); }
     </style>
 </head>
 <body>
@@ -86,55 +111,41 @@
     <h1>HAPPY BIRTHDAY CÚN IUUU! ❤️</h1>
 
     <div class="stage">
-        <div class="bouquet">💐</div>
         <div class="cake-box"><div class="cake">🎂</div></div>
+        <div class="bouquet">💐</div>
+        
         <div class="envelope-container">
-            <div class="envelope active" id="envelope" onclick="openLetter()">✉️</div>
+            <div class="guide-box" id="guide">
+                <div class="arrow">↓</div>
+                <div class="guide-text">Ấn mở thư</div>
+            </div>
+            <div class="envelope" id="envelope" onclick="openLetter()">✉️</div>
         </div>
     </div>
 
     <div id="letterPopup" class="letter-popup">
         <div class="letter-text">
             <p><strong>Gửi Cún luuu ❤️,</strong></p>
-            <p>Chúc mừng sinh nhật em yêu. Chúc em luôn xinh đẹp, rạng rỡ và hạnh phúc bên anh nhé!</p>
+            <p>Chúc mừng sinh nhật em yêu. Chúc em luôn xinh đẹp rạng rỡ và hạnh phúc bên anh nhé!</p>
             <p>Yêu em thật nhiều! 👩‍❤️‍👨</p>
-            <p style="text-align: right;">-- Anh Tuấn --</p>
+            <p style="text-align: right; font-weight: bold;">-- Anh Tuấn --</p>
         </div>
         <button class="close-btn" onclick="closeLetter()">Gấp thư lại ❤️</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
-<script>
-    function openLetter() {
-        document.getElementById('letterPopup').classList.add('show');
-        document.getElementById('envelope').style.visibility = "hidden";
-        
-        // Bắn pháo hoa rực rỡ chúc mừng
-        const duration = 3 * 1000;
-        const end = Date.now() + duration;
-
-        (function frame() {
-            confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#ffafbd', '#d63384']
-            });
-            confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#ffafbd', '#d63384']
-            });
-
-            if (Date.now() < end) {
-                requestAnimationFrame(frame);
-            }
-        }());
-    }
-</script>
+    <script>
+        function openLetter() {
+            document.getElementById('letterPopup').classList.add('show');
+            document.getElementById('envelope').style.visibility = "hidden";
+            document.getElementById('guide').style.display = "none";
+            confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 }, colors: ['#ffafbd', '#d63384'] });
+        }
+        function closeLetter() {
+            document.getElementById('letterPopup').classList.remove('show');
+            document.getElementById('envelope').style.visibility = "visible";
+            document.getElementById('guide').style.display = "block";
+        }
+    </script>
 </body>
 </html>
