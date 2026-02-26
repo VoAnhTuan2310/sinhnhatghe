@@ -110,38 +110,3 @@ html, body {
         padding: 12px 30px;
     }
 }
-/* 1. THÔNG BÁO NHẮC XOAY MÁY */
-#rotateMessage {
-    display: none; /* Chỉ hiện khi máy đang để dọc */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #ffafbd;
-    z-index: 100000;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-}
-
-/* 2. CHỈ HIỆN THÔNG BÁO KHI MÀN HÌNH ĐANG DỌC (PORTRAIT) */
-@media screen and (orientation: portrait) {
-    #rotateMessage {
-        display: flex;
-    }
-    .intro-container {
-        display: none; /* Ẩn album ảnh khi chưa xoay ngang */
-    }
-}
-
-/* 3. TỐI ƯU ẢNH KHI MÀN HÌNH NGANG */
-@media screen and (orientation: landscape) {
-    .moving-photo {
-        width: clamp(80px, 12vw, 110px); /* Ảnh nhỏ lại một chút để không gian rộng hơn */
-    }
-    .btn-next {
-        bottom: 20px;
-        transform: translate(-50%, 0) scale(1) !important;
-    }
-}

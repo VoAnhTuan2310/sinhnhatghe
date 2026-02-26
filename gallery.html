@@ -5,37 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kỷ niệm của chúng mình ❤️</title>
     <link rel="stylesheet" href="style_intro.css">
-    <style>
-        /* Hiệu ứng xoay điện thoại và nhịp đập nốt nhạc */
-        @keyframes rotateAnim {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(90deg); }
-            100% { transform: rotate(0deg); }
-        }
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-    </style>
 </head>
 <body>
-
     <div id="rotateMessage">
         <div style="font-size: 50px; animation: rotateAnim 2s infinite;">📱🔄</div>
         <h2 style="margin-top: 20px;">Cún iu xoay ngang điện thoại <br> để xem kỷ niệm đẹp nhất nhé! ❤️</h2>
     </div>
 
-    <div id="musicHint" onclick="startEverything()" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; text-align: center; cursor: pointer; background: rgba(255,255,255,0.8); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); animation: pulse 1.5s infinite;">
-        <div style="font-size: 45px;">🎵</div>
-        <div style="color: #d63384; font-weight: bold; margin-top: 15px; font-family: 'Quicksand', sans-serif;">Chạm để bắt đầu kỷ niệm ❤️</div>
+    <div id="musicHint" onclick="startEverything()">
+        <div style="font-size: 40px;">🎵</div>
+        <div style="color: #d63384; font-weight: bold; margin-top: 10px;">Chạm để bắt đầu kỷ niệm ❤️</div>
     </div>
 
     <div class="intro-container" id="introContainer">
-        <button id="btnStart" class="btn-next" style="display:none; position: fixed; left: 50%; bottom: 40px; transform: translate(-50%, 50%);">
+        <button id="btnStart" class="btn-next" style="display:none; position: fixed; left: 50%; bottom: 30px;">
             Tiếp nè :3
         </button>
     </div>
+
+    <style>
+        /* Hiệu ứng xoay nốt nhạc/điện thoại */
+        @keyframes rotateAnim {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
+            100% { transform: rotate(0deg); }
+        }
+    </style>
+    <div class="intro-container" id="introContainer">
+        <button id="btnStart" class="btn-next" style="display:none;">
+            Tiếp nè :3
+        </button>
+    </div>
+    <div id="musicHint" onclick="startEverything()" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; text-align: center; cursor: pointer; background: rgba(255,255,255,0.7); padding: 20px; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1); animation: pulse 1.5s infinite;">
+    <div style="font-size: 40px;">🎵</div>
+    <div style="color: #d63384; font-weight: bold; margin-top: 10px;">Chạm để bắt đầu kỷ niệm ❤️</div>
+</div>
 
     <audio id="bgMusic" loop>
         <source src="music/intro.mp3" type="audio/mpeg">
@@ -46,29 +50,28 @@
     const totalPhotos = 51;
     const bgMusic = document.getElementById('bgMusic');
 
-    // Hàm bắt đầu khi Cún chạm vào nốt nhạc
+    // Hàm bắt đầu mọi thứ khi Cún chạm vào nốt nhạc
     function startEverything() {
-        // Mở nhạc (Giải quyết vấn đề chặn âm thanh trên iPhone)
+        // Phát nhạc
         if (bgMusic) {
-            bgMusic.play().catch(e => console.log("Yêu cầu tương tác người dùng để phát nhạc"));
+            bgMusic.play().catch(e => console.log("iPhone chờ tương tác..."));
         }
-
-        // Ẩn bảng hướng dẫn
+        // Ẩn hướng dẫn
         document.getElementById('musicHint').style.display = 'none';
         
-        // Bắt đầu tung ảnh kỷ niệm
+        // Khởi tạo ảnh bay
         for (let i = 1; i <= totalPhotos; i++) {
             spawnPhoto(i);
         }
 
-        // Hiện nút chuyển trang sau 15 giây
+        // Hiện nút Tiếp nè sau 15 giây
         setTimeout(() => {
             const btn = document.getElementById('btnStart');
             btn.onclick = () => window.location.href = 'final.html';
             btn.style.display = 'block';
             setTimeout(() => { 
                 btn.style.opacity = '1';
-                btn.style.transform = 'translate(-50%, 0) scale(1)';
+                btn.style.transform = 'translate(-50%, -50%) scale(1)';
             }, 100);
         }, 15000);
     }
@@ -78,17 +81,14 @@
         img.src = `img/cun${index}.jpg`; 
         img.className = 'moving-photo';
         
-        // Căn chỉnh vị trí ngẫu nhiên
-        img.style.top = `${Math.random() * 75 + 5}vh`; 
-        img.style.left = `-${250 + Math.random() * 1500}px`; 
+        img.style.top = `${Math.random() * 80 + 5}vh`; 
+        img.style.left = `-${250 + Math.random() * 1000}px`; 
         
-        // Cấu hình thời gian bay và độ xoay
-        const duration = 25 + Math.random() * 15; 
+        const duration = 20 + Math.random() * 15; 
         img.style.animationDuration = `${duration}s`;
         img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
-        img.style.animationDelay = `${Math.random() * 20}s`;
+        img.style.animationDelay = `${Math.random() * 30}s`;
 
-        // Hiệu ứng tương tác Nhấn giữ (Glow)
         let pressTimer;
         const startGlow = () => {
             pressTimer = setTimeout(() => {
@@ -107,7 +107,6 @@
         img.addEventListener('touchend', endGlow);
         img.addEventListener('mouseleave', endGlow);
 
-        // Hiệu ứng Chạm (Zoom)
         img.onclick = function(e) {
             e.stopPropagation();
             this.classList.remove('glowing');
@@ -116,11 +115,12 @@
 
         container.appendChild(img);
 
-        // Khi ảnh bay hết màn hình, reset lại vị trí top
         img.addEventListener('animationiteration', () => {
-            img.style.top = `${Math.random() * 75 + 5}vh`;
+            img.style.top = `${Math.random() * 80 + 5}vh`;
         });
     }
+
+    // Xóa vòng lặp for cũ ở ngoài vì đã đưa vào hàm startEverything()
 </script>
 </body>
 </html>
