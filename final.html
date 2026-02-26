@@ -112,6 +112,41 @@
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
 }
+/* Tối ưu riêng cho điện thoại */
+@media (max-width: 600px) {
+    body {
+        /* Đảm bảo nội dung luôn ở chính giữa màn hình dọc */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 1.4rem !important; /* Thu nhỏ tiêu đề để không bị tràn dòng */
+        margin-top: -50px; /* Đẩy tiêu đề lên cao một chút */
+        width: 90%;
+    }
+
+    .stage {
+        /* Chuyển từ hàng ngang sang hàng dọc một cách có chủ đích */
+        flex-direction: column !important; 
+        height: auto !important;
+        gap: 30px !important; /* Tạo khoảng cách đều giữa bánh, hoa và thư */
+        margin-top: 40px;
+    }
+
+    .cake, .bouquet, .envelope-container {
+        /* Đảm bảo các biểu tượng không bị lệch sang trái/phải */
+        transform: scale(0.9); 
+        margin: 0 auto;
+    }
+
+    .envelope-container {
+        order: 3; /* Đặt thư ở cuối cùng */
+    }
+}
     </style>
 </head>
 <body>
