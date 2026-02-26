@@ -9,35 +9,25 @@
 </head>
 <body>
     <div class="container">
-        <h1>Chạm vào ảnh thử êyyy :v</h1>
+        <h1 class="title-text">Chạm vào ảnh để xem điều ước nhé ❤️</h1>
         
-        <div class="wish-scatter">
-            <div class="wish-item item-1" onclick="openWish('Chúc bé iu của út luôn xinh đẹp nè 🌸')">
-                <img src="img/cun1.jpg" alt="cun1">
-            </div>
-            <div class="wish-item item-2" onclick="openWish('Chúc em yêu mỗi ngày đều tràn ngập niềm vui nhó ✨')">
-                <img src="img/cun21.jpg" alt="cun2">
-            </div>
-            <div class="wish-item item-3" onclick="openWish('Chúc Cún iuuu đạt được mọi ước mơ nhaaa 💖')">
-                <img src="img/cun15.jpg" alt="cun3">
-            </div>
-            <div class="wish-item item-4" onclick="openWish('Chúc tình yêu của chúng mình mãi bên nhau hẹ hẹ 👩‍❤️‍👨')">
-                <img src="img/cun3.jpg" alt="cun4">
-            </div>
-            <div class="wish-item item-5" onclick="openWish('Chúc mừng sinh nhật em yêu, anh yêu em nhất đời 🎂')">
-                <img src="img/cun5.jpg" alt="cun5">
-            </div>
-        </div>
+        <div class="wish-scatter" id="wishScatter"></div>
 
-        <button id="btnFinal" class="btn-final" style="display:none;" onclick="window.location.href='gallery.html'">
-    Ngắm nhìn kỷ niệm của chúng mình ❤️
-</button>
+        <button id="btnFinal" class="btn-final" onclick="finishWishes()">
+            Ngắm nhìn kỷ niệm của chúng mình ❤️
+        </button>
     </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <p id="msg"></p>
-            <button class="btn-close" onclick="closeMsg()">Đã nhận ❤️</button>
+    <div id="notebookContainer" class="notebook-container">
+        <div class="notebook" id="notebook">
+            <div class="notebook-page notebook-cover">
+                <img id="notebookCoverImg" src="" alt="kỷ niệm">
+                <p style="margin-top:10px; font-size: 0.9rem;">Gửi Cún của anh...</p>
+            </div>
+            <div class="notebook-page notebook-right">
+                <div id="typewriter" class="letter-text"></div>
+                <button class="btn-close-notebook" onclick="closeNotebook()">Gấp lại ❤️</button>
+            </div>
         </div>
     </div>
 
@@ -45,62 +35,118 @@
         <source src="music/wishes.mp3" type="audio/mpeg">
     </audio>
     <audio id="openSound">
-    <source src="music/ting.mp3" type="audio/mpeg">
-</audio>
+        <source src="music/ting.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        let opened = 0;
+        const scatter = document.getElementById('wishScatter');
+        const bgMusic = document.getElementById('wishMusic');
+        let openedCount = 0;
 
-        function openWish(text) {
-            // 1. Hiển thị thông điệp
-            document.getElementById('msg').innerText = text;
-            document.getElementById('modal').style.display = 'flex';
+        const myPhotos = [
+            "img/cun1.jpg", 
+            "img/cun21.jpg", 
+            "img/cun15.jpg", 
+            "img/cun3.jpg", 
+            "img/cun5.jpg"
+        ];
 
-            // 2. Phát nhạc nền ngay cú chạm đầu tiên
-            const bgMusic = document.getElementById('wishMusic');
+        const messages = [
+            "Chúc bé iu của út luôn luôn xinh đep, vui vẻ và thành công trong cuộc sống nhóoo 🌟",
+            "Mong em luôn bình an và hạnh phúc bên anh ✨",
+            "Chúc mọi dự định của Cún đều thành công tốt đẹp 💖",
+            "Chúc tình yêu của chúng mình mãi mãi bên nhau hẹ hẹ, Út Cún Cún 👩‍❤️‍👨",
+            "Chúc mừng sinh nhật em yêu nhó, hẹp bi bớt đây tu diuuu 🎂"
+        ];
+
+        function playMusic() {
             if (bgMusic && bgMusic.paused) {
-                bgMusic.play().catch(e => console.log("Trình duyệt chờ tương tác để phát nhạc"));
+                bgMusic.play().catch(e => console.log("iPhone chặn tự động phát"));
             }
+        }
+
+        document.body.addEventListener('touchstart', playMusic, { once: true });
+
+        function spawnWishItem(index) {
+            const item = document.createElement('div');
+            item.className = `wish-item item-${index + 1}`;
             
-            // 3. PHÁT TIẾNG "TING" MỞ LỜI CHÚC
-        const openSnd = document.getElementById('openSound');
-        if (openSnd) {
-            openSnd.currentTime = 0; // Reset để bấm nhiều ảnh liên tục vẫn kêu
-            openSnd.play().catch(e => console.log("Lỗi âm thanh hiệu ứng"));
+            const img = document.createElement('img');
+            img.src = myPhotos[index]; 
+
+            let pressTimer;
+            const startGlow = () => {
+                playMusic();
+                pressTimer = setTimeout(() => { item.classList.add('glowing'); }, 200);
+            };
+
+            const endGlow = () => {
+                clearTimeout(pressTimer);
+                item.classList.remove('glowing');
+            };
+
+            item.addEventListener('touchstart', startGlow);
+            item.addEventListener('touchend', endGlow);
+            item.addEventListener('mousedown', startGlow);
+            item.addEventListener('mouseup', endGlow);
+
+            item.onclick = function(e) {
+                e.stopPropagation();
+                this.classList.remove('glowing');
+                openNotebook(messages[index], myPhotos[index]);
+            };
+
+            item.appendChild(img);
+            scatter.appendChild(item);
         }
 
-            // 3. Hiệu ứng pháo hoa giấy mini khi mở điều ước
-            confetti({
-                particleCount: 50,
-                spread: 60,
-                origin: { y: 0.7 },
-                colors: ['#ffafbd', '#ffffff', '#d63384']
-            });
+        for (let i = 0; i < 5; i++) { spawnWishItem(i); }
 
-            // 4. Logic hiện nút quà cuối
-            opened++;
-            if(opened >= 3) {
-                document.getElementById('btnFinal').style.display = 'inline-block';
+        let i = 0;
+        let currentTxt = "";
+        function typeWriter() {
+            if (i < currentTxt.length) {
+                document.getElementById("typewriter").innerHTML += currentTxt.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
             }
         }
 
-        function closeMsg() { 
-            document.getElementById('modal').style.display = 'none'; 
+        function openNotebook(text, photoSrc) {
+            const openSnd = document.getElementById('openSound');
+            if (openSnd) openSnd.play();
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 } });
+
+            document.getElementById('notebookCoverImg').src = photoSrc;
+            document.getElementById("typewriter").innerHTML = "";
+            i = 0; currentTxt = text;
+
+            document.getElementById('notebookContainer').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('notebook').classList.add('flip');
+                typeWriter();
+            }, 100);
+
+            openedCount++;
+            if(openedCount >= 3) {
+                document.getElementById('btnFinal').style.display = 'block';
+                setTimeout(() => { document.getElementById('btnFinal').style.opacity = '1'; }, 100);
+            }
         }
-        function openNotebook(text, index) {
-    // Tìm tấm ảnh vừa bấm vào
-    const activeItem = document.querySelector(`.item-${index}`);
-    if(activeItem) {
-        activeItem.style.zIndex = "99999";
-        activeItem.classList.add('flip-notebook');
-    }
-    
-    // Đợi 100ms cho ảnh ổn định vị trí giữa rồi mới hiện vở
-    setTimeout(() => {
-        document.getElementById('notebookContainer').classList.add('show');
-        // ... các code hiện vở khác giữ nguyên ...
-    }, 100);
-}
+
+        function closeNotebook() {
+            document.getElementById('notebook').classList.remove('flip');
+            setTimeout(() => { document.getElementById('notebookContainer').classList.remove('show'); }, 500);
+        }
+
+        // HÀM QUAN TRỌNG: Điều hướng có hướng dẫn
+        function finishWishes() {
+            const huongDan = confirm("Tiếp theo cún quay ngang màn hình lại để xem nhó\n\nđược thì bật âm lượng lên nghe cho chill chill :v, chạm vào màn hình để nghe nhạc và thử 'nhấn giữ' các bức ảnh bay nhé");
+            
+            if (huongDan) {
+                window.location.href = 'gallery.html';
+            }
+        }
     </script>
 </body>
 </html>
