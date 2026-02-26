@@ -41,11 +41,13 @@
         img.style.top = `${Math.random() * 80 + 5}vh`; 
         img.style.left = `-${250 + Math.random() * 1000}px`; // Tăng độ trễ xuất hiện
         
-        const duration = 18 + Math.random() * 12; // Cho ảnh bay chậm lại một chút để Cún kịp nhìn
+        const duration = 20 + Math.random() * 15; // Cho ảnh bay chậm lại một chút để Cún kịp nhìn
         img.style.animationDuration = `${duration}s`;
-        img.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
-        img.style.animationDelay = `${Math.random() * 15}s`; // Rải rác thời gian ra quân
-
+       img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+        img.style.animationDelay = `${Math.random() * 30}s`; // Rải rác thời gian ra quân
+img.addEventListener('animationiteration', () => {
+        img.style.top = `${Math.random() * 80 + 5}vh`;
+    });
         let pressTimer;
         const startGlow = () => {
             playMusic();
@@ -93,7 +95,7 @@
             btn.style.opacity = '1';
             btn.style.transform = 'translate(-50%, -50%) scale(1)';
         }, 100);
-    }, 10000);
+    }, 15000);
 </script>
 </body>
 </html>

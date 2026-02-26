@@ -74,3 +74,101 @@ h1 { color: #d63384; font-size: clamp(1rem, 4vw, 1.4rem); z-index: 10; padding: 
 /* Modal giữ nguyên */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
 .modal-content { background: white; padding: 25px; border-radius: 20px; width: 80%; max-width: 320px; text-align: center; }
+/* Hiệu ứng trang vở mở ra */
+.modal-content {
+    width: 90%;
+    max-width: 400px;
+    background: #fff;
+    /* Tạo hiệu ứng dòng kẻ vở */
+    background-image: linear-gradient(#e1e1e1 1px, transparent 1px);
+    background-size: 100% 30px; /* Độ cao mỗi dòng kẻ */
+    padding: 60px 30px 30px 60px; /* Để chừa lề đỏ bên trái */
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 10px 10px 40px rgba(0,0,0,0.2);
+    transform: rotateX(20deg) scale(0.8);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Lề đỏ của cuốn vở */
+.modal-content::before {
+    content: '';
+    position: absolute;
+    left: 45px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #ff7878;
+}
+
+/* Khi trang vở hiện ra */
+.modal.show .modal-content {
+    transform: rotateX(0deg) scale(1);
+}
+
+/* Chữ viết tay trên dòng kẻ */
+#msg {
+    font-family: 'Quicksand', sans-serif;
+    color: #333;
+    line-height: 30px; /* Khớp với độ cao dòng kẻ */
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.btn-close {
+    margin-top: 30px;
+    background: #d63384;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.item-15 { 
+    top: 25%; 
+    left: 35%; 
+    transform: rotate(-10deg); /* Chỉ giữ rotate ở đây */
+    margin: 0; /* Đảm bảo không có margin làm lệch ảnh */
+}
+.wish-item {
+    position: absolute;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 5;
+    /* Cố định tâm quay để không bị lệch khi phóng to */
+    transform-origin: center center; 
+}
+/* Tọa độ mới cho tấm ảnh số 3 để không bị lệch khi biến thành vở */
+.item-3 { 
+    top: 40%; 
+    left: 40%; /* Chỉnh lại để nó nằm ở vùng trung tâm nhưng không dùng 50% */
+    transform: rotate(-5deg); 
+}
+
+/* Khi tấm ảnh này biến thành cuốn vở lật */
+.wish-item.flip-notebook {
+    /* Ép nó về giữa màn hình tuyệt đối trước khi lật */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) rotate(0deg) !important;
+    z-index: 99999 !important;
+}
+.notebook-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* Sử dụng translate để luôn giữ đúng tâm */
+    transform: translate(-50%, -50%) scale(0);
+    width: 90%;
+    max-width: 400px;
+    z-index: 100000;
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Quan trọng: Không để bị ảnh hưởng bởi tọa độ của tấm ảnh cũ */
+    margin: 0 !important; 
+}
+
+.notebook-container.show {
+    display: flex;
+    transform: translate(-50%, -50%) scale(1);
+}

@@ -87,6 +87,20 @@
         function closeMsg() { 
             document.getElementById('modal').style.display = 'none'; 
         }
+        function openNotebook(text, index) {
+    // Tìm tấm ảnh vừa bấm vào
+    const activeItem = document.querySelector(`.item-${index}`);
+    if(activeItem) {
+        activeItem.style.zIndex = "99999";
+        activeItem.classList.add('flip-notebook');
+    }
+    
+    // Đợi 100ms cho ảnh ổn định vị trí giữa rồi mới hiện vở
+    setTimeout(() => {
+        document.getElementById('notebookContainer').classList.add('show');
+        // ... các code hiện vở khác giữ nguyên ...
+    }, 100);
+}
     </script>
 </body>
 </html>
