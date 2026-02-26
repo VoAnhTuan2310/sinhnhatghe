@@ -5,25 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Điều ước cho Cún ❤️</title>
     <link rel="stylesheet" href="style_wishes.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Chạm vào ảnh để xem điều ước nhé! ❤️</h1>
         
         <div class="wish-scatter">
-            <div class="wish-item item-1" onclick="openMsg('Chúc công chúa luôn xinh đẹp rạng ngời! 🌸')">
+            <div class="wish-item item-1" onclick="openWish('Chúc công chúa luôn xinh đẹp rạng ngời! 🌸')">
                 <img src="img/cun1.jpg" alt="cun1">
             </div>
-            <div class="wish-item item-2" onclick="openMsg('Chúc em mỗi ngày đều tràn ngập niềm vui! ✨')">
+            <div class="wish-item item-2" onclick="openWish('Chúc em mỗi ngày đều tràn ngập niềm vui! ✨')">
                 <img src="img/cun2.jpg" alt="cun2">
             </div>
-            <div class="wish-item item-3" onclick="openMsg('Chúc Cún iuuu đạt được mọi ước mơ! 💖')">
+            <div class="wish-item item-3" onclick="openWish('Chúc Cún iuuu đạt được mọi ước mơ! 💖')">
                 <img src="img/cun3.jpg" alt="cun3">
             </div>
-            <div class="wish-item item-4" onclick="openMsg('Chúc tình yêu của chúng mình mãi bền lâu! 👩‍❤️‍👨')">
+            <div class="wish-item item-4" onclick="openWish('Chúc tình yêu của chúng mình mãi bền lâu! 👩‍❤️‍👨')">
                 <img src="img/cun4.jpg" alt="cun4">
             </div>
-            <div class="wish-item item-5" onclick="openMsg('Chúc mừng sinh nhật, yêu em nhất đời! 🎂')">
+            <div class="wish-item item-5" onclick="openWish('Chúc mừng sinh nhật, yêu em nhất đời! 🎂')">
                 <img src="img/cun5.jpg" alt="cun5">
             </div>
         </div>
@@ -40,15 +41,52 @@
         </div>
     </div>
 
+    <audio id="wishMusic" loop>
+        <source src="music/wishes.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="openSound">
+    <source src="music/ting.mp3" type="audio/mpeg">
+</audio>
+
     <script>
         let opened = 0;
-        function openMsg(text) {
+
+        function openWish(text) {
+            // 1. Hiển thị thông điệp
             document.getElementById('msg').innerText = text;
             document.getElementById('modal').style.display = 'flex';
-            opened++;
-            if(opened >= 3) document.getElementById('btnFinal').style.display = 'inline-block';
+
+            // 2. Phát nhạc nền ngay cú chạm đầu tiên
+            const bgMusic = document.getElementById('wishMusic');
+            if (bgMusic && bgMusic.paused) {
+                bgMusic.play().catch(e => console.log("Trình duyệt chờ tương tác để phát nhạc"));
+            }
+            
+            // 3. PHÁT TIẾNG "TING" MỞ LỜI CHÚC
+        const openSnd = document.getElementById('openSound');
+        if (openSnd) {
+            openSnd.currentTime = 0; // Reset để bấm nhiều ảnh liên tục vẫn kêu
+            openSnd.play().catch(e => console.log("Lỗi âm thanh hiệu ứng"));
         }
-        function closeMsg() { document.getElementById('modal').style.display = 'none'; }
+
+            // 3. Hiệu ứng pháo hoa giấy mini khi mở điều ước
+            confetti({
+                particleCount: 50,
+                spread: 60,
+                origin: { y: 0.7 },
+                colors: ['#ffafbd', '#ffffff', '#d63384']
+            });
+
+            // 4. Logic hiện nút quà cuối
+            opened++;
+            if(opened >= 3) {
+                document.getElementById('btnFinal').style.display = 'inline-block';
+            }
+        }
+
+        function closeMsg() { 
+            document.getElementById('modal').style.display = 'none'; 
+        }
     </script>
 </body>
 </html>
