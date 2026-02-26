@@ -12,11 +12,16 @@
             Tiếp tục ❤️
         </button>
     </div>
-
+<audio id="bgMusic" loop>
+    <source src="music/intro.mp3" type="audio/mpeg">
+</audio>
     <script>
     const container = document.getElementById('introContainer');
     const totalPhotos = 30;
-    
+    // Kích hoạt nhạc khi chạm vào bất kỳ đâu
+    document.body.addEventListener('click', function() {
+        document.getElementById('bgMusic').play();
+    }, { once: true });
     // Hàm tạo ảnh bay lộn xộn (Giữ nguyên như bản trước)
     function spawnPhoto(index) {
         const img = document.createElement('img');
