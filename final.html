@@ -81,11 +81,41 @@
             .stage { flex-direction: column; align-items: center; height: auto; gap: 10px; }
             .cake { order: 1; } .bouquet { order: 2; font-size: 70px; } .envelope-container { order: 3; }
         }
+        /* Định dạng nút chuyển sang trang cuối */
+.btn-end {
+    position: fixed;
+    bottom: 30px;
+    background: white;
+    color: #d63384;
+    border: 2px solid #d63384;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(214, 51, 132, 0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    /* Ẩn đi lúc đầu, chỉ hiện sau khi đọc thư xong (tùy chọn) */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.btn-end.show {
+    opacity: 1;
+    pointer-events: auto;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
     </style>
 </head>
 <body>
-
-    <h1>HAPPY BIRTHDAY CÚN IUUU! ❤️</h1>
+    <h1>HAPPY BIRTHDAY CÚN IUUU ❤️</h1>
 
     <div class="stage">
         <div class="cake">🎂</div>
@@ -95,7 +125,7 @@
                 <div class="arrow">↓</div>
                 <div class="guide-text">Ấn mở thư</div>
             </div>
-            <div class="envelope" id="envelope" onclick="openLetter()">✉️</div>
+            <div id="envelope" class="envelope" onclick="openLetter()">✉️</div>
         </div>
     </div>
 
@@ -103,21 +133,29 @@
         <div id="typewriter" class="letter-text"></div>
         <button id="closeBtn" class="close-btn" onclick="closeLetter()">Gấp thư lại ❤️</button>
     </div>
-<audio id="birthMusic">
-    <source src="music/birthday.mp3" type="audio/mpeg">
-</audio>
+
+    <button id="lastBtn" class="btn-end" onclick="window.location.href='the_end.html'">
+        Yêu anh thì bấm vào đây ❤️
+    </button>
+
+    <audio id="birthMusic">
+        <source src="music/birthday.mp3" type="audio/mpeg">
+    </audio>
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script>
-        const message = "Gửi Cún luuu ❤️,\n\nChúc mừng sinh nhật người con gái anh thương nhất. Chúc em luôn xinh đẹp, rạng rỡ và đạt được mọi điều mình mong muốn.\n\nDù có chuyện gì xảy ra, hãy nhớ luôn có anh ở bên cạnh ủng hộ em nhé!\n\nYêu em thật nhiều! 👩‍❤️‍👨\n\n-- Anh Tuấn --";
+        const message = "Gửi Cún luuu ❤️,\n\nChúc mừng sinh nhật người con gái anh thương nhất. Chúc em luôn xinh đẹp, rạng rỡ và đạt được mọi điều mình mong muốn.\nDù có chuyện gì xảy ra, hãy nhớ luôn có anh ở bên cạnh ủng hộ em nhé\n\nYêu em nhiều lắm 👩‍❤️‍👨\n Út Cún Cún ❤️ \n\n-- Út --";
         let i = 0;
 
         function typeWriter() {
             if (i < message.length) {
                 document.getElementById("typewriter").innerHTML += message.charAt(i);
                 i++;
-                setTimeout(typeWriter, 50); // Tốc độ viết chữ
+                setTimeout(typeWriter, 50);
             } else {
+                // Khi viết xong thư: Hiện nút đóng thư và nút chuyển trang cuối
                 document.getElementById("closeBtn").style.opacity = "1";
+                document.getElementById("lastBtn").classList.add("show");
             }
         }
 
@@ -125,31 +163,17 @@
             document.getElementById('letterPopup').classList.add('show');
             document.getElementById('envelope').style.visibility = "hidden";
             document.getElementById('guide').style.display = "none";
-            
-            // Phát nhạc ngay khi mở thư
-        document.getElementById('birthMusic').play();
-
-            // Bắn pháo hoa
+            document.getElementById('birthMusic').play();
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#ffafbd', '#d63384'] });
             
-            // Bắt đầu viết chữ
             if(i === 0) typeWriter();
         }
 
         function closeLetter() {
             document.getElementById('letterPopup').classList.remove('show');
             document.getElementById('envelope').style.visibility = "visible";
-            document.getElementById('birthMusic').pause(); // Dừng nhạc khi đóng
-        document.getElementById('birthMusic').currentTime = 0; // Reset nhạc
+            // Bạn có thể chọn dừng nhạc hoặc để nhạc chạy tiếp tùy ý
         }
-    
-    function closeLetter() {
-        document.getElementById('letterPopup').classList.remove('show');
-        document.getElementById('envelope').style.visibility = "visible";
-        document.getElementById('birthMusic').pause(); // Dừng nhạc khi đóng
-        document.getElementById('birthMusic').currentTime = 0; // Reset nhạc
-    }
     </script>
-    
 </body>
 </html>

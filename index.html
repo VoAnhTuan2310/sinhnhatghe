@@ -3,67 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Gửi Cún Iuuu ❤️</title>
-    <link rel="stylesheet" href="style_intro.css">
+    <title>Màn hình khóa tình yêu ❤️</title>
+    <link rel="stylesheet" href="style_password.css">
+    <style>
+        /* CSS bổ sung để hiệu ứng chạy được */
+        .heart-effect {
+            position: fixed; font-size: 24px; pointer-events: none; z-index: 9999;
+            animation: flyUp 1s ease-out forwards;
+        }
+        @keyframes flyUp {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150px) scale(1.5); opacity: 0; }
+        }
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
 </head>
 <body>
-    <div class="intro-container" id="introContainer">
-        <button id="btnStart" class="btn-next" onclick="window.location.href='password.html'">
-            Tiếp tục ❤️
-        </button>
+    <div class="main-card">
+        <div class="image-section"><img src="img/ut.jpg" class="side-photo"></div>
+        <div class="password-section">
+            <p class="title-text">Nhập ngày sinh của Cún...</p>
+            <input type="password" id="passInput" class="pass-display" readonly>
+            <div class="keypad" id="keypad">
+                <script>
+                    // SỬA LỖI 1: Thêm 'event' vào hàm onclick
+                    for(let i=1; i<=9; i++) {
+                        document.write(`<div class="key" onclick="addNumber(${i}, event)">${i}</div>`);
+                    }
+                </script>
+                <div class="key btn-clear" onclick="clearPass()">C</div>
+                <div class="key" onclick="addNumber(0, event)">0</div>
+                <div class="key btn-check" onclick="checkPass()">✓</div>
+            </div>
+        </div>
     </div>
-<audio id="bgMusic" loop>
-    <source src="music/intro.mp3" type="audio/mpeg">
-</audio>
+
+    <audio id="clickSound">
+        <source src="music/click.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-    const container = document.getElementById('introContainer');
-    const totalPhotos = 30;
-    // Kích hoạt nhạc khi chạm vào bất kỳ đâu
-    document.body.addEventListener('click', function() {
-        document.getElementById('bgMusic').play();
-    }, { once: true });
-    // Hàm tạo ảnh bay lộn xộn (Giữ nguyên như bản trước)
-    function spawnPhoto(index) {
-        const img = document.createElement('img');
-        img.src = `img/cun${index}.jpg`;
-        img.className = 'moving-photo';
-        
-        // Độ cao ngẫu nhiên
-        img.style.top = `${Math.random() * 75 + 5}vh`;
-        
-        // Tốc độ bay ngẫu nhiên (từ 15s đến 25s)
-        const duration = 15 + Math.random() * 10;
-        img.style.animationDuration = `${duration}s`;
-        
-        // Độ xoay ngẫu nhiên
-        img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
-        
-        // Thời gian xuất hiện ngẫu nhiên để ảnh rải rác
-        img.style.animationDelay = `${Math.random() * 10}s`;
+        let correctPass = "160306"; 
 
-        container.appendChild(img);
+        // SỬA LỖI 2: Gộp thành 1 hàm duy nhất và xử lý lỗi event
+        function addNumber(n, event) {
+            const input = document.getElementById('passInput');
+            const sound = document.getElementById('clickSound');
 
-        // Vòng lặp vô tận
-        img.addEventListener('animationiteration', () => {
-            img.style.top = `${Math.random() * 75 + 5}vh`;
-        });
-    }
+            if(input.value.length < 6) {
+                input.value += n;
+                
+                // Phát tiếng click
+                if (sound) {
+                    sound.currentTime = 0;
+                    sound.play().catch(e => console.log("Cần chạm màn hình trước để bật nhạc"));
+                }
 
-    // Khởi tạo 30 tấm ảnh
-    for (let i = 1; i <= totalPhotos; i++) {
-        spawnPhoto(i);
-    }
+                // Hiệu ứng trái tim (Chỉ chạy khi có event)
+                if(event) {
+                    const heart = document.createElement('div');
+                    heart.innerText = '❤️';
+                    heart.className = 'heart-effect';
+                    heart.style.left = event.clientX + 'px';
+                    heart.style.top = event.clientY + 'px';
+                    document.body.appendChild(heart);
+                    setTimeout(() => heart.remove(), 1000);
+                }
+            }
+        }
 
-    // --- PHẦN THAY ĐỔI: ĐỢI 5 GIÂY MỚI HIỆN NÚT ---
-    setTimeout(() => {
-        const btn = document.getElementById('btnStart');
-        btn.style.display = 'block'; // Đảm bảo nút được hiển thị
-        // Thêm một chút delay nhỏ để hiệu ứng fade-in mượt mà hơn
-        setTimeout(() => {
-            btn.style.opacity = '1';
-            btn.style.transform = 'scale(1)'; // Hiệu ứng phóng to nhẹ khi hiện
-        }, 100);
-    }, 5000); // 5000ms tương đương với 5 giây
-</script>
+        function clearPass() { document.getElementById('passInput').value = ""; }
+
+        function checkPass() {
+            const input = document.getElementById('passInput');
+            const card = document.querySelector('.main-card');
+
+            if(input.value === "160306") {
+                window.location.href = 'wishes.html';
+            } else {
+                card.classList.add('shake');
+                setTimeout(() => card.classList.remove('shake'), 500);
+                alert("Sai ngày sinh rồi Cún iuuu!");
+                clearPass();
+            }
+        }
+    </script>
 </body>
 </html>

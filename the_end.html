@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hết rùiii ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
+        
+        /* Cấu hình để căn giữa tuyệt đối */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #ffafbd; /* Màu hồng đặc trưng của Anh Tuấn */
+        }
+
+        body {
+            display: flex;
+            justify-content: center; /* Căn giữa ngang */
+            align-items: center;     /* Căn giữa dọc */
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .container-end {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 2s ease forwards; /* Hiệu ứng hiện hình nhẹ nhàng */
+        }
+
+        .end-text {
+            font-size: clamp(2.5rem, 8vw, 4rem); /* Tự co giãn chữ theo màn hình */
+            color: white;
+            text-shadow: 2px 5px 15px rgba(214, 51, 132, 0.3);
+            margin: 0;
+        }
+
+        .heart {
+            font-size: 2rem;
+            margin-top: 15px;
+            display: inline-block;
+            animation: beat 1s infinite alternate; /* Trái tim đập lãng mạn */
+        }
+
+        /* Hiệu ứng mượt mà */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes beat {
+            from { transform: scale(1); }
+            to { transform: scale(1.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-end">
+        <h1 class="end-text">Hết rùiii...</h1>
+        <div class="heart">❤️</div>
+    </div>
+</body>
+</html>

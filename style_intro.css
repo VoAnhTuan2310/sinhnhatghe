@@ -1,28 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
-/* Khung xương chống tràn cho mọi thiết bị */
+
+/* 1. KHUNG XƯƠNG CHỐNG TRÀN TUYỆT ĐỐI */
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Ép mọi thứ không được to hơn kích thước quy định */
+    box-sizing: border-box;
 }
 
 html, body {
     width: 100%;
     height: 100%;
-    overflow-x: hidden; /* Cấm tuyệt đối thanh cuộn ngang */
-    overflow-y: hidden; /* Cấm thanh cuộn dọc nếu bạn muốn web dạng app */
-    position: fixed;    /* Giữ khung hình đứng yên trên điện thoại */
-}
-body, html {
-    margin: 0; padding: 0;
-    width: 100%; height: 100%;
-    overflow: hidden; /* Chống tràn màn hình tuyệt đối */
+    overflow: hidden;
+    position: fixed; /* Giữ khung hình đứng yên trên iPhone */
     background: #ffafbd;
     font-family: 'Quicksand', sans-serif;
 }
 
 .intro-container {
-    width: 100vw; height: 100vh;
+    width: 100vw;
+    height: 100vh;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -30,33 +26,55 @@ body, html {
     align-items: center;
 }
 
-/* Định dạng ảnh bay */
+/* 2. ĐỊNH DẠNG ẢNH BAY (GALLERY) */
 .moving-photo {
     position: absolute;
-    width: clamp(100px, 25vw, 160px); /* Tự co giãn theo màn hình */
-    height: auto;
+    left: -250px;
+    width: clamp(120px, 25vw, 180px);
     border: 5px solid white;
-    border-radius: 8px;
+    border-bottom: 20px solid white; /* Kiểu Polaroid lãng mạn */
+    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    left: -200px; /* Bắt đầu từ ngoài bên trái */
-    opacity: 0;
-    /* Animation bay từ trái sang phải vô tận */
-    animation: flowRight linear infinite;
-    will-change: transform, left;
-    pointer-events: none; /* Không làm vướng nút bấm */
+    cursor: pointer;
+    
+    /* Animation bay và transition mượt mà */
+    animation: moveAcross linear infinite;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto;
+    z-index: 10;
+}
+.moving-photo.glowing {
+    /* Phát sáng lóa màu Pink Pastel cực mạnh */
+    box-shadow: 0 0 50px rgba(255, 175, 189, 0.9),
+                0 0 80px rgba(214, 51, 132, 0.6);
+    
+    /* Thu nhỏ nhẹ một chút tạo cảm giác như Cún đang ấn xuống */
+    transform: scale(0.9) !important;
+    
+    z-index: 1000; /* Nổi hẳn lên */
+}
+/* Hiệu ứng Zoom khi chạm vào ảnh */
+.moving-photo.zoom {
+    transform: scale(2) rotate(0deg) !important; /* Phóng to gấp đôi */
+    z-index: 1000;
+    
+    /* Phát sáng nhẹ hơn sau khi zoom */
+    box-shadow: 0 0 30px rgba(255, 175, 189, 0.5);
+    
+    animation-play-state: paused; /* Tạm dừng bay khi đang zoom */
 }
 
-@keyframes flowRight {
-    0% { left: -200px; opacity: 0; }
+@keyframes moveAcross {
+    0% { left: -250px; opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
-    100% { left: 110vw; opacity: 0; } /* Bay hết sang phải */
+    100% { left: 110vw; opacity: 0; }
 }
 
-/* Nút Tiếp tục */
+/* 3. NÚT TIẾP TỤC (XUẤT HIỆN SAU 5S) */
 .btn-next {
     position: relative;
-    z-index: 100;
+    z-index: 1100;
     background: #d63384;
     color: white;
     border: none;
@@ -66,33 +84,28 @@ body, html {
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(214, 51, 132, 0.4);
-    opacity: 0;
-    transition: all 0.5s ease;
-}
-
-.btn-next:hover { transform: scale(1.1); background: #e83e8c; }
-
-/* Tối ưu cho Mobile */
-@media (max-width: 600px) {
-    .moving-photo { width: 110px; border-width: 3px; }
-    .btn-next { font-size: 1.1rem; padding: 12px 30px; }
-}
-.btn-next {
-    position: relative;
-    z-index: 100;
-    background: #d63384;
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    border-radius: 35px;
-    font-size: 1.3rem;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 10px 25px rgba(214, 51, 132, 0.4);
-    
-    /* Trạng thái ban đầu: Ẩn và thu nhỏ */
+    z-index: 9999 !important;
+    /* Trạng thái ẩn ban đầu */
     display: none; 
     opacity: 0;
     transform: scale(0.8);
     transition: opacity 1s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-next:hover {
+    transform: scale(1.1);
+    background: #e83e8c;
+}
+
+/* 4. TỐI ƯU RIÊNG CHO MOBILE (IPHONE) */
+@media (max-width: 600px) {
+    .moving-photo {
+        width: 115px;
+        border-width: 3px;
+        border-bottom-width: 12px;
+    }
+    .btn-next {
+        font-size: 1.1rem;
+        padding: 12px 30px;
+    }
 }

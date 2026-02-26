@@ -9,10 +9,15 @@ body, html {
 }
 
 .container {
-    width: 100vw; height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: flex-start;
-    padding-top: 20px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center;    /* Căn giữa theo chiều ngang */
+    overflow: hidden;
+    position: relative;
+    padding: 20px;
 }
 
 h1 { color: #d63384; font-size: clamp(1rem, 4vw, 1.4rem); z-index: 10; padding: 0 10px; }
@@ -20,17 +25,21 @@ h1 { color: #d63384; font-size: clamp(1rem, 4vw, 1.4rem); z-index: 10; padding: 
 /* KHUNG CHỨA QUAN TRỌNG: Đảm bảo có chiều cao để hiện ảnh */
 .wish-scatter {
     position: relative;
-    width: 100%;
-    height: 70vh; /* Chiếm 70% chiều cao màn hình */
-    margin-top: 20px;
+    width: 90%;
+    max-width: 800px; /* Giới hạn độ rộng để không bị loãng trên máy tính */
+    height: 60vh;    /* Chiếm 60% chiều cao màn hình */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
 }
 
 .wish-item {
     position: absolute;
-    width: clamp(100px, 25vw, 150px); /* Tự co size theo màn hình */
+    width: clamp(100px, 20vw, 150px); /* Tự co giãn kích thước */
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: sway 4s ease-in-out infinite alternate;
+    transition: transform 0.3s ease;
+    z-index: 5;
 }
 
 .wish-item img {
@@ -43,11 +52,12 @@ h1 { color: #d63384; font-size: clamp(1rem, 4vw, 1.4rem); z-index: 10; padding: 
 }
 
 /* Tọa độ lộn xộn trong vùng an toàn */
-.item-1 { top: 5%; left: 5%; transform: rotate(-10deg); }
-.item-2 { top: 15%; left: 55%; transform: rotate(8deg); }
-.item-3 { top: 40%; left: 10%; transform: rotate(-5deg); }
-.item-4 { top: 50%; left: 60%; transform: rotate(12deg); }
-.item-5 { top: 65%; left: 25%; transform: rotate(-8deg); }
+.item-1 { top: 5%;  left: 5%;   transform: rotate(-15deg); }
+.item-2 { top: 10%; right: 5%;  transform: rotate(10deg); }
+.item-3 { top: 45%; left: 50%;  transform: translate(-50%, -50%) rotate(-5deg); }
+/* Ảnh 3 nằm ngay chính giữa làm tâm */
+.item-4 { bottom: 5%; left: 10%; transform: rotate(15deg); }
+.item-5 { bottom: 10%; right: 10%; transform: rotate(-10deg); }
 
 .wish-item:hover { transform: scale(1.1) rotate(0deg) !important; z-index: 100; }
 

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kỷ niệm của chúng mình ❤️</title>
+    <link rel="stylesheet" href="style_intro.css">
+</head>
+<body>
+    <div class="intro-container" id="introContainer">
+        <button id="btnStart" class="btn-next" style="display:none;">
+            Tiếp nè :3
+        </button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music/intro.mp3" type="audio/mpeg">
+    </audio>
+
+<script>
+    const container = document.getElementById('introContainer');
+    const totalPhotos = 51; // ĐÃ CẬP NHẬT LÊN 50 ẢNH
+    const bgMusic = document.getElementById('bgMusic');
+
+    function playMusic() {
+        if (bgMusic && bgMusic.paused) {
+            bgMusic.play().catch(e => console.log("iPhone chờ tương tác..."));
+        }
+    }
+
+    document.body.addEventListener('click', playMusic, { once: true });
+    document.body.addEventListener('touchstart', playMusic, { once: true });
+
+    function spawnPhoto(index) {
+        const img = document.createElement('img');
+        // Anh Tuấn nhớ phải có đủ từ cun1.jpg đến cun51.jpg trong thư mục img nhé
+        img.src = `img/cun${index}.jpg`; 
+        img.className = 'moving-photo';
+        
+        // Rải rác ảnh rộng hơn để 50 tấm không bị quá dày
+        img.style.top = `${Math.random() * 80 + 5}vh`; 
+        img.style.left = `-${250 + Math.random() * 1000}px`; // Tăng độ trễ xuất hiện
+        
+        const duration = 18 + Math.random() * 12; // Cho ảnh bay chậm lại một chút để Cún kịp nhìn
+        img.style.animationDuration = `${duration}s`;
+        img.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+        img.style.animationDelay = `${Math.random() * 15}s`; // Rải rác thời gian ra quân
+
+        let pressTimer;
+        const startGlow = () => {
+            playMusic();
+            pressTimer = setTimeout(() => {
+                img.classList.add('glowing');
+            }, 200); 
+        };
+
+        const endGlow = () => {
+            clearTimeout(pressTimer);
+            img.classList.remove('glowing');
+        };
+
+        img.addEventListener('mousedown', startGlow);
+        img.addEventListener('touchstart', startGlow);
+        img.addEventListener('mouseup', endGlow);
+        img.addEventListener('touchend', endGlow);
+        img.addEventListener('mouseleave', endGlow);
+
+        img.onclick = function(e) {
+            e.stopPropagation();
+            playMusic();
+            this.classList.remove('glowing');
+            this.classList.toggle('zoom');
+        };
+
+        container.appendChild(img);
+
+        img.addEventListener('animationiteration', () => {
+            img.style.top = `${Math.random() * 80 + 5}vh`;
+        });
+    }
+
+    // Khởi tạo 50 tấm ảnh
+    for (let i = 1; i <= totalPhotos; i++) {
+        spawnPhoto(i);
+    }
+
+    // Nút hiện sau 7 giây dẫn đến trang cuối
+    setTimeout(() => {
+        const btn = document.getElementById('btnStart');
+        btn.onclick = () => window.location.href = 'final.html';
+        btn.style.display = 'block';
+        setTimeout(() => { 
+            btn.style.opacity = '1';
+            btn.style.transform = 'translate(-50%, -50%) scale(1)';
+        }, 100);
+    }, 10000);
+</script>
+</body>
+</html>
