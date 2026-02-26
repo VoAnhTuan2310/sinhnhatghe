@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Điều ước cho Cún ❤️</title>
     <link rel="stylesheet" href="style_wishes.css">
 </head>
@@ -10,21 +10,21 @@
     <div class="container">
         <h1>Chạm vào ảnh để xem điều ước nhé! ❤️</h1>
         
-        <div class="wish-scatter" id="wishArea">
+        <div class="wish-scatter">
             <div class="wish-item item-1" onclick="openMsg('Chúc công chúa luôn xinh đẹp rạng ngời! 🌸')">
-                <img src="img/cun1.jpg">
+                <img src="img/cun1.jpg" alt="cun1">
             </div>
             <div class="wish-item item-2" onclick="openMsg('Chúc em mỗi ngày đều tràn ngập niềm vui! ✨')">
-                <img src="img/cun2.jpg">
+                <img src="img/cun2.jpg" alt="cun2">
             </div>
             <div class="wish-item item-3" onclick="openMsg('Chúc Cún iuuu đạt được mọi ước mơ! 💖')">
-                <img src="img/cun3.jpg">
+                <img src="img/cun3.jpg" alt="cun3">
             </div>
             <div class="wish-item item-4" onclick="openMsg('Chúc tình yêu của chúng mình mãi bền lâu! 👩‍❤️‍👨')">
-                <img src="img/cun4.jpg">
+                <img src="img/cun4.jpg" alt="cun4">
             </div>
             <div class="wish-item item-5" onclick="openMsg('Chúc mừng sinh nhật, yêu em nhất đời! 🎂')">
-                <img src="img/cun5.jpg">
+                <img src="img/cun5.jpg" alt="cun5">
             </div>
         </div>
 
@@ -46,8 +46,7 @@
             document.getElementById('msg').innerText = text;
             document.getElementById('modal').style.display = 'flex';
             opened++;
-            // Nếu đã xem đủ 3 lời chúc thì hiện nút quà cuối
-            if(opened >= 3) document.getElementById('btnFinal').style.display = 'block';
+            if(opened >= 3) document.getElementById('btnFinal').style.display = 'inline-block';
         }
         function closeMsg() { document.getElementById('modal').style.display = 'none'; }
     </script>

@@ -1,132 +1,98 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@700&display=swap');
-
-body {
+/* Khung xương chống tràn cho mọi thiết bị */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ép mọi thứ không được to hơn kích thước quy định */
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Cấm tuyệt đối thanh cuộn ngang */
+    overflow-y: hidden; /* Cấm thanh cuộn dọc nếu bạn muốn web dạng app */
+    position: fixed;    /* Giữ khung hình đứng yên trên điện thoại */
+}
+body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    overflow: hidden; /* Chống tràn màn hình tuyệt đối */
     background: #ffafbd;
     font-family: 'Quicksand', sans-serif;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .intro-container {
+    width: 100vw; height: 100vh;
     position: relative;
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Định dạng ảnh trôi lộn xộn */
+/* Định dạng ảnh bay */
 .moving-photo {
     position: absolute;
-    width: 180px;
+    width: clamp(100px, 25vw, 160px); /* Tự co giãn theo màn hình */
     height: auto;
-    border: 6px solid white;
+    border: 5px solid white;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    left: -350px; /* Xuất phát từ ngoài bên trái */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    left: -200px; /* Bắt đầu từ ngoài bên trái */
     opacity: 0;
-    animation: slideRight 12s linear forwards;
-    pointer-events: none; /* Không cho click vào ảnh đang bay */
+    /* Animation bay từ trái sang phải vô tận */
+    animation: flowRight linear infinite;
+    will-change: transform, left;
+    pointer-events: none; /* Không làm vướng nút bấm */
 }
 
-@keyframes slideRight {
-    0% { left: -350px; opacity: 0; }
+@keyframes flowRight {
+    0% { left: -200px; opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
-    100% { left: 110vw; opacity: 0; } /* Trôi hết qua bên phải */
+    100% { left: 110vw; opacity: 0; } /* Bay hết sang phải */
 }
 
-/* Nút Tiếp tục ở chính giữa */
+/* Nút Tiếp tục */
 .btn-next {
-    position: absolute;
-    z-index: 999;
+    position: relative;
+    z-index: 100;
     background: #d63384;
     color: white;
     border: none;
-    padding: 18px 50px;
-    border-radius: 40px;
-    font-size: 1.5rem;
+    padding: 15px 40px;
+    border-radius: 35px;
+    font-size: 1.3rem;
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 10px 25px rgba(214, 51, 132, 0.4);
-    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transition: all 0.5s ease;
 }
 
-@keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
+.btn-next:hover { transform: scale(1.1); background: #e83e8c; }
 
-.btn-next:hover {
-    transform: scale(1.1);
-    background: #e83e8c;
+/* Tối ưu cho Mobile */
+@media (max-width: 600px) {
+    .moving-photo { width: 110px; border-width: 3px; }
+    .btn-next { font-size: 1.1rem; padding: 12px 30px; }
 }
-
-/* Thông báo xoay ngang máy */
-#orientation-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: #ffafbd;
-    color: white;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    text-align: center;
-    padding: 20px;
-}
-
-@media screen and (orientation: portrait) {
-    #orientation-overlay { display: flex; }
-}
-/* Hiệu ứng hạt lấp lánh bay lơ lửng */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.3;
-    animation: sparkle 10s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-}
-
-@keyframes sparkle {
-    from { transform: translateY(0); }
-    to { transform: translateY(-500px); }
-}
-.balloon {
-        position: absolute; bottom: -100px; font-size: 30px;
-        animation: floatUp 8s linear infinite; z-index: 1; pointer-events: none;
-    }
- @keyframes floatUp {
-        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
-    }
-    body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* Chống tràn tuyệt đối */
-    position: fixed; /* Giữ màn hình đứng yên */
-}
-
-.intro-container {
-    width: 100vw;
-    height: 100vh;
+.btn-next {
     position: relative;
-}
-
-.moving-photo {
-    /* Đảm bảo ảnh không bao giờ quá to so với màn hình nhỏ */
-    max-width: 40vw; 
-    pointer-events: none;
+    z-index: 100;
+    background: #d63384;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 35px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(214, 51, 132, 0.4);
+    
+    /* Trạng thái ban đầu: Ẩn và thu nhỏ */
+    display: none; 
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease, transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }

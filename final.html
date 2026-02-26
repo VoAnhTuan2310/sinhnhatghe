@@ -6,7 +6,33 @@
     <title>Happy Birthday Cún Iuuu ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
-        
+        /* Khung xương chống tràn cho mọi thiết bị */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ép mọi thứ không được to hơn kích thước quy định */
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Cấm tuyệt đối thanh cuộn ngang */
+    overflow-y: hidden; /* Cấm thanh cuộn dọc nếu bạn muốn web dạng app */
+    position: fixed;    /* Giữ khung hình đứng yên trên điện thoại */
+}
+.intro-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    overflow: hidden; /* Ảnh bay quá rìa sẽ tự biến mất, không làm tràn web */
+}
+
+.moving-photo {
+    /* Sử dụng clamp để ảnh tự co lại trên màn hình nhỏ */
+    width: clamp(100px, 25vw, 150px); 
+    height: auto;
+    pointer-events: none; /* Tránh việc chạm nhầm vào ảnh khi định bấm nút */
+}
         body {
             background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
             min-height: 100vh; margin: 0; overflow: hidden;
@@ -104,6 +130,17 @@
 
 .cake { font-size: clamp(80px, 25vw, 150px); } /* Tự động co size theo màn hình */
 .bouquet { font-size: clamp(60px, 20vw, 120px); }
+.stage {
+    display: flex;
+    flex-direction: column; /* Xếp dọc cho an toàn trên Mobile */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+@media (min-height: 500px) {
+    .stage { flex-direction: row; align-items: flex-end; } /* Chỉ xếp ngang khi màn hình đủ cao */
+}
     </style>
 </head>
 <body>
