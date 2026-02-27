@@ -78,9 +78,20 @@
         @keyframes blink { 50% { opacity: 0; } }
 
         @media (max-width: 600px) {
-            .stage { flex-direction: column; align-items: center; height: auto; gap: 10px; }
-            .cake { order: 1; } .bouquet { order: 2; font-size: 70px; } .envelope-container { order: 3; }
-        }
+    .stage {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Chia đôi màn hình cho hoa và bánh */
+        grid-template-rows: auto auto;
+        gap: 10px;
+        align-items: center;
+    }
+    .cake { grid-column: 1 / 2; font-size: 80px; }
+    .bouquet { grid-column: 2 / 3; font-size: 60px; }
+    .envelope-container { 
+        grid-column: 1 / 3; /* Thư nằm giữa dưới cùng */
+        margin-top: 20px;
+    }
+}
         /* Định dạng nút chuyển sang trang cuối */
 .btn-end {
     position: fixed;

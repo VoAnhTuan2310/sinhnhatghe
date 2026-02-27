@@ -7,11 +7,6 @@
     <link rel="stylesheet" href="style_intro.css">
 </head>
 <body>
-    <div id="rotateMessage">
-        <div style="font-size: 50px; animation: rotateAnim 2s infinite;">📱🔄</div>
-        <h2 style="margin-top: 20px;">Cún iu xoay ngang điện thoại <br> để xem kỷ niệm đẹp nhất nhé! ❤️</h2>
-    </div>
-
     <div id="musicHint" onclick="startEverything()">
         <div style="font-size: 40px;">🎵</div>
         <div style="color: #d63384; font-weight: bold; margin-top: 10px;">Chạm để bắt đầu kỷ niệm ❤️</div>
@@ -28,20 +23,7 @@
     </audio>
 
     <style>
-        /* Hiệu ứng xoay điện thoại */
-        @keyframes rotateAnim {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(90deg); }
-            100% { transform: rotate(0deg); }
-        }
-        
-        /* Hiệu ứng mạch đập cho nút chạm */
-        @keyframes pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            50% { transform: translate(-50%, -50%) scale(1.05); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
+        /* CSS TỐI GIẢN - KHÔNG CÒN LOGIC XOAY MÁY */
         #musicHint {
             position: fixed; top: 50%; left: 50%; 
             transform: translate(-50%, -50%); 
@@ -52,16 +34,29 @@
             animation: pulse 1.5s infinite;
         }
 
-        #rotateMessage {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #ffafbd; z-index: 100000;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; color: white;
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Ẩn thông báo xoay khi máy nằm ngang */
-        @media (orientation: landscape) {
-            #rotateMessage { display: none; }
+        /* Đảm bảo container phủ kín màn hình dọc */
+        .intro-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: #ffafbd;
+        }
+
+        .btn-next {
+            position: fixed;
+            left: 50%;
+            bottom: 50px;
+            transform: translateX(-50%);
+            z-index: 1000;
+            opacity: 0;
+            transition: 0.5s;
         }
     </style>
 
@@ -71,26 +66,23 @@
         const bgMusic = document.getElementById('bgMusic');
 
         function startEverything() {
-            // Phát nhạc và ẩn nút gợi ý
             if (bgMusic) {
                 bgMusic.play().catch(e => console.log("iPhone chờ tương tác..."));
             }
             document.getElementById('musicHint').style.display = 'none';
             
-            // Khởi tạo 51 tấm ảnh bay
             for (let i = 1; i <= totalPhotos; i++) {
                 spawnPhoto(i);
             }
 
-            // Hiện nút "Tiếp nè" sau 15 giây
             setTimeout(() => {
                 const btn = document.getElementById('btnStart');
                 btn.style.display = 'block';
-                btn.onclick = () => window.location.href = 'timeline.html'; // Chuyển sang trang timeline đã làm
+                // Dẫn sang trang timeline tiếp theo
+                btn.onclick = () => window.location.href = 'final.html'; 
                 
                 setTimeout(() => { 
                     btn.style.opacity = '1';
-                    btn.style.transform = 'translateX(-50%) scale(1)';
                 }, 100);
             }, 15000);
         }
@@ -100,16 +92,14 @@
             img.src = `img/cun${index}.jpg`; 
             img.className = 'moving-photo';
             
-            // Tọa độ và hiệu ứng bay ngẫu nhiên
-            img.style.top = `${Math.random() * 80 + 5}vh`; 
-            img.style.left = `-${250 + Math.random() * 1000}px`; 
+            // Chỉnh tọa độ bay phù hợp với màn hình dọc iPhone
+            img.style.top = `${Math.random() * 90}vh`; 
+            img.style.left = `-${Math.random() * 500 + 200}px`; 
             
-            const duration = 20 + Math.random() * 15; 
+            const duration = 15 + Math.random() * 10; 
             img.style.animationDuration = `${duration}s`;
-            img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
-            img.style.animationDelay = `${Math.random() * 30}s`;
+            img.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
 
-            // Xử lý chạm/giữ để phát sáng và xem ảnh
             img.onclick = function(e) {
                 e.stopPropagation();
                 this.classList.toggle('zoom');
