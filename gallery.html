@@ -18,109 +18,105 @@
     </div>
 
     <div class="intro-container" id="introContainer">
-        <button id="btnStart" class="btn-next" style="display:none; position: fixed; left: 50%; bottom: 30px;">
-            Tiếp nè :3
-        </button>
-    </div>
-
-    <style>
-        /* Hiệu ứng xoay nốt nhạc/điện thoại */
-        @keyframes rotateAnim {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(90deg); }
-            100% { transform: rotate(0deg); }
-        }
-    </style>
-    <div class="intro-container" id="introContainer">
         <button id="btnStart" class="btn-next" style="display:none;">
             Tiếp nè :3
         </button>
     </div>
-    <div id="musicHint" onclick="startEverything()" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 99999; text-align: center; cursor: pointer; background: rgba(255,255,255,0.7); padding: 20px; border-radius: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.1); animation: pulse 1.5s infinite;">
-    <div style="font-size: 40px;">🎵</div>
-    <div style="color: #d63384; font-weight: bold; margin-top: 10px;">Chạm để bắt đầu kỷ niệm ❤️</div>
-</div>
 
     <audio id="bgMusic" loop>
         <source src="music/intro.mp3" type="audio/mpeg">
     </audio>
 
-<script>
-    const container = document.getElementById('introContainer');
-    const totalPhotos = 51;
-    const bgMusic = document.getElementById('bgMusic');
-
-    // Hàm bắt đầu mọi thứ khi Cún chạm vào nốt nhạc
-    function startEverything() {
-        // Phát nhạc
-        if (bgMusic) {
-            bgMusic.play().catch(e => console.log("iPhone chờ tương tác..."));
+    <style>
+        /* Hiệu ứng xoay điện thoại */
+        @keyframes rotateAnim {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
+            100% { transform: rotate(0deg); }
         }
-        // Ẩn hướng dẫn
-        document.getElementById('musicHint').style.display = 'none';
         
-        // Khởi tạo ảnh bay
-        for (let i = 1; i <= totalPhotos; i++) {
-            spawnPhoto(i);
+        /* Hiệu ứng mạch đập cho nút chạm */
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+            100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        // Hiện nút Tiếp nè sau 15 giây
-        setTimeout(() => {
-            const btn = document.getElementById('btnStart');
-            btn.onclick = () => window.location.href = 'final.html';
-            btn.style.display = 'block';
-            setTimeout(() => { 
-                btn.style.opacity = '1';
-                btn.style.transform = 'translate(-50%, -50%) scale(1)';
-            }, 100);
-        }, 15000);
-    }
+        #musicHint {
+            position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 99999; text-align: center; 
+            cursor: pointer; background: rgba(255,255,255,0.8); 
+            padding: 20px; border-radius: 20px; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); 
+            animation: pulse 1.5s infinite;
+        }
 
-    function spawnPhoto(index) {
-        const img = document.createElement('img');
-        img.src = `img/cun${index}.jpg`; 
-        img.className = 'moving-photo';
-        
-        img.style.top = `${Math.random() * 80 + 5}vh`; 
-        img.style.left = `-${250 + Math.random() * 1000}px`; 
-        
-        const duration = 20 + Math.random() * 15; 
-        img.style.animationDuration = `${duration}s`;
-        img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
-        img.style.animationDelay = `${Math.random() * 30}s`;
+        #rotateMessage {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffafbd; z-index: 100000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; color: white;
+        }
 
-        let pressTimer;
-        const startGlow = () => {
-            pressTimer = setTimeout(() => {
-                img.classList.add('glowing');
-            }, 200); 
-        };
+        /* Ẩn thông báo xoay khi máy nằm ngang */
+        @media (orientation: landscape) {
+            #rotateMessage { display: none; }
+        }
+    </style>
 
-        const endGlow = () => {
-            clearTimeout(pressTimer);
-            img.classList.remove('glowing');
-        };
+    <script>
+        const container = document.getElementById('introContainer');
+        const totalPhotos = 51;
+        const bgMusic = document.getElementById('bgMusic');
 
-        img.addEventListener('mousedown', startGlow);
-        img.addEventListener('touchstart', startGlow);
-        img.addEventListener('mouseup', endGlow);
-        img.addEventListener('touchend', endGlow);
-        img.addEventListener('mouseleave', endGlow);
+        function startEverything() {
+            // Phát nhạc và ẩn nút gợi ý
+            if (bgMusic) {
+                bgMusic.play().catch(e => console.log("iPhone chờ tương tác..."));
+            }
+            document.getElementById('musicHint').style.display = 'none';
+            
+            // Khởi tạo 51 tấm ảnh bay
+            for (let i = 1; i <= totalPhotos; i++) {
+                spawnPhoto(i);
+            }
 
-        img.onclick = function(e) {
-            e.stopPropagation();
-            this.classList.remove('glowing');
-            this.classList.toggle('zoom');
-        };
+            // Hiện nút "Tiếp nè" sau 15 giây
+            setTimeout(() => {
+                const btn = document.getElementById('btnStart');
+                btn.style.display = 'block';
+                btn.onclick = () => window.location.href = 'timeline.html'; // Chuyển sang trang timeline đã làm
+                
+                setTimeout(() => { 
+                    btn.style.opacity = '1';
+                    btn.style.transform = 'translateX(-50%) scale(1)';
+                }, 100);
+            }, 15000);
+        }
 
-        container.appendChild(img);
+        function spawnPhoto(index) {
+            const img = document.createElement('img');
+            img.src = `img/cun${index}.jpg`; 
+            img.className = 'moving-photo';
+            
+            // Tọa độ và hiệu ứng bay ngẫu nhiên
+            img.style.top = `${Math.random() * 80 + 5}vh`; 
+            img.style.left = `-${250 + Math.random() * 1000}px`; 
+            
+            const duration = 20 + Math.random() * 15; 
+            img.style.animationDuration = `${duration}s`;
+            img.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+            img.style.animationDelay = `${Math.random() * 30}s`;
 
-        img.addEventListener('animationiteration', () => {
-            img.style.top = `${Math.random() * 80 + 5}vh`;
-        });
-    }
+            // Xử lý chạm/giữ để phát sáng và xem ảnh
+            img.onclick = function(e) {
+                e.stopPropagation();
+                this.classList.toggle('zoom');
+            };
 
-    // Xóa vòng lặp for cũ ở ngoài vì đã đưa vào hàm startEverything()
-</script>
+            container.appendChild(img);
+        }
+    </script>
 </body>
 </html>
