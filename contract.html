@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sổ Chứng Nhận Tình Yêu ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e60012;
+            --border-pink: #ffb1c1;
+        }
+
+        body {
+            margin: 0; padding: 15px; min-height: 100vh;
+            background: #fff5f6; font-family: 'Quicksand', sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden;
+            position: fixed; width: 100%; height: 100%;
+        }
+
+        .heart {
+            position: fixed; top: -10%; font-size: 15px;
+            color: rgba(255, 105, 180, 0.3);
+            pointer-events: none; z-index: 0;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .outer-glow {
+            background: white; width: 100%; max-width: 380px;
+            padding: 10px; border-radius: 8px;
+            border: 15px solid transparent;
+            border-image: url('https://img.freepik.com/free-vector/pink-floral-border-background-vector_53876-136302.jpg') 30 round;
+            position: relative; box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .inner-paper {
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border: 1px solid #ffe0e5; padding: 20px;
+            display: flex; flex-direction: column; align-items: center;
+            height: 75vh; position: relative;
+        }
+
+        /* NHÀNH HOA LEO NGHỆ THUẬT Ở 2 GÓC TRÊN */
+        .flower-branch {
+            position: absolute; width: 100px; height: 100px;
+            background-image: url('https://png.pngtree.com/png-vector/20240201/ourmid/pngtree-rose-flower-climbing-plant-vintage-illustration-png-image_11585869.png');
+            background-size: contain; background-repeat: no-repeat;
+            z-index: 20; opacity: 0.9; pointer-events: none;
+        }
+        .flower-left { top: -5px; left: -5px; }
+        .flower-right { top: -5px; right: -5px; transform: scaleX(-1); }
+
+        .logo-love {
+            width: 90px; margin: -10px 0 10px 0;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .logo-love img { width: 100%; height: auto; }
+
+        h1 {
+            font-size: 1.4rem; color: #333; margin: 0 0 10px 0;
+            text-transform: uppercase; letter-spacing: 1px; text-align: center;
+        }
+        
+        .photo-frame {
+            width: 170px; height: 120px; border: 3px solid #ffccd5;
+            margin: 10px auto; overflow: hidden; border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .names-box {
+            font-size: 1.5rem; font-weight: bold; color: var(--primary-red);
+            font-family: 'Dancing Script', cursive; margin: 5px 0 15px;
+        }
+        .desc-text { text-align: center; font-size: 0.8rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
+
+        .sig-row {
+            display: flex; justify-content: space-between; width: 100%;
+            margin-top: auto; border-top: 1px dashed #ffccd5;
+            padding-top: 15px; position: relative;
+        }
+        
+        .sig-item { width: 45%; text-align: left; }
+        .sig-label { font-size: 0.7rem; color: #888; margin-bottom: 5px; font-weight: bold; }
+
+        .ut-signature {
+            font-family: 'Pinyon Script', cursive; font-size: 1.8rem;
+            color: #222; border-bottom: 1.5px solid #333;
+            height: 45px; display: flex; align-items: flex-end; padding-left: 5px;
+        }
+
+        .cun-signature-area {
+            border-bottom: 2px solid var(--primary-red); height: 45px;
+            background: rgba(230,0,18,0.02); position: relative;
+            touch-action: none;
+            z-index: 2;
+        }
+        #cunCanvas { width: 100%; height: 100%; cursor: crosshair; }
+
+        .stamp {
+            position: absolute; left: 50%; top: 20px;
+            transform: translate(-50%, -50%) rotate(-15deg) scale(0);
+            width: 80px; height: 80px; 
+            border: 3px double rgba(230,0,18,0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: rgba(230,0,18,0.3);
+            font-weight: bold; font-size: 0.7rem; text-align: center;
+            background: transparent; 
+            transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            pointer-events: none; opacity: 0;
+        }
+        .stamp.show { transform: translate(-50%, -50%) rotate(-15deg) scale(1); opacity: 0.6; }
+
+        .btn-finish {
+            margin-top: 25px; background: var(--primary-red); color: white;
+            padding: 12px 40px; border-radius: 25px; border: none;
+            font-weight: bold; display: none; z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="outer-glow">
+        <div class="inner-paper">
+            <div class="flower-branch flower-left"></div>
+            <div class="flower-branch flower-right"></div>
+
+            <div class="logo-love">
+                <img src="img/tim.png" alt="Love Certificate Logo">
+            </div>
+
+            <h1>Sổ Chứng Nhận Tình Yêu</h1>
+            
+            <div class="photo-frame">
+                <img src="img/cun18.jpg" alt="Couple Photo">
+            </div>
+
+            <div class="names-box">Út ❤️ Cún</div>
+            
+            <div class="desc-text">
+                Chào Cún iu ❤️, bằng tất cả sự thấu hiểu và sẻ chia, tấm bằng này chứng thực rằng Út hứa sẽ luôn yêu thương, trân trọng và bên cạnh Cún nhiều hơn mỗi ngày. Mãi yêu Cún ❤️
+            </div>
+
+            <div class="sig-row">
+                <div class="sig-item">
+                    <div class="sig-label">Ký tên (Út):</div>
+                    <div class="ut-signature">Ut</div>
+                </div>
+                <div class="sig-item">
+                    <div class="sig-label">Ký tên (Cún):</div>
+                    <div class="cun-signature-area">
+                        <canvas id="cunCanvas"></canvas> 
+                    </div>
+                </div>
+                <div class="stamp" id="loveStamp">CHỨNG NHẬN<br>LOVE<br>2026</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="btn-finish" id="btnFinish" onclick="window.location.href='final.html'">Hoàn Tất ❤️</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 4 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 800);
+
+        const canvas = document.getElementById('cunCanvas');
+        const ctx = canvas.getContext('2d');
+        let drawing = false, hasSigned = false;
+
+        function setupCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width; canvas.height = rect.height;
+            ctx.strokeStyle = "#c2185b"; ctx.lineWidth = 2.5;
+            ctx.lineJoin = "round"; ctx.lineCap = "round";
+        }
+        window.onload = setupCanvas;
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function start(e) { e.preventDefault(); drawing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); }
+        function move(e) { if(!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); hasSigned = true; }
+        function stop() { 
+            if(drawing && hasSigned) {
+                document.getElementById('loveStamp').classList.add('show');
+                document.getElementById('btnFinish').style.display = 'block';
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.8 } });
+            }
+            drawing = false; 
+        }
+
+        canvas.addEventListener('touchstart', start);
+        canvas.addEventListener('touchmove', move);
+        window.addEventListener('touchend', stop);
+        canvas.addEventListener('mousedown', start);
+        canvas.addEventListener('mousemove', move);
+        window.addEventListener('mouseup', stop);
+    </script>
+</body>
+</html>
