@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sổ Chứng Nhận Tình Yêu ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500;700&family=Pinyon+Script&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root { --primary-red: #e60012; --border-pink: #ffb1c1; }
         body {
@@ -48,60 +48,83 @@
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
             border: 1px solid #ffe0e5; padding: 15px;
             display: flex; flex-direction: column; align-items: center;
-            height: 78vh; position: relative;
+            height: 76vh; position: relative;
         }
 
         .count-in-box {
             background: rgba(230, 0, 18, 0.05); padding: 5px 15px;
-            border-radius: 15px; font-size: 0.7rem; color: var(--primary-red);
-            font-weight: bold; margin-bottom: 10px; border: 1px dashed var(--border-pink);
+            border-radius: 15px; font-size: 0.65rem; color: var(--primary-red);
+            font-weight: bold; margin-bottom: 5px; border: 1px dashed var(--border-pink);
         }
 
         .flower-branch {
-            position: absolute; width: 90px; height: 90px;
+            position: absolute; width: 85px; height: 85px;
             background-image: url('https://png.pngtree.com/png-vector/20240201/ourmid/pngtree-rose-flower-climbing-plant-vintage-illustration-png-image_11585869.png');
             background-size: contain; background-repeat: no-repeat; opacity: 0.8; z-index: 5;
         }
         .flower-left { top: -5px; left: -5px; }
         .flower-right { top: -5px; right: -5px; transform: scaleX(-1); }
 
+        .cert-header { text-align: center; margin-bottom: 10px; width: 100%; }
+        .cert-title { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: #333; margin: 0; line-height: 1.2; }
+        
+        .divider { display: flex; align-items: center; justify-content: center; margin: 5px 0; }
+        .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--border-pink); max-width: 60px; }
+        .divider-heart { margin: 0 10px; font-size: 12px; color: var(--primary-red); }
+        .cert-subtitle-bottom { font-size: 0.7rem; color: #666; font-style: italic; line-height: 1.4; }
+
         .photo-frame {
-            width: 150px; height: 110px; border: 3px solid #fff;
+            width: 140px; height: 100px; border: 3px solid #fff;
             margin: 5px auto; overflow: hidden; border-radius: 3px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-        .names-box { font-size: 1.4rem; font-weight: bold; color: var(--primary-red); font-family: 'Dancing Script', cursive; margin: 5px 0; }
-        .desc-text { text-align: center; font-size: 0.75rem; color: #555; line-height: 1.5; margin-bottom: 10px; padding: 0 10px; }
+        .names-box { font-size: 1.3rem; font-weight: bold; color: var(--primary-red); font-family: 'Dancing Script', cursive; margin: 3px 0; }
+        .desc-text { text-align: center; font-size: 0.65rem; color: #555; line-height: 1.4; margin-bottom: 5px; padding: 0 10px; }
 
-        /* FIX VÙNG CHỮ KÝ */
-        .sig-row { width: 100%; margin-top: auto; display: flex; justify-content: space-between; border-top: 1px dashed #ffccd5; padding: 15px 0 25px 0; position: relative; }
+        /* PHẦN CHỮ KÝ THẲNG HÀNG */
+        .sig-row { 
+            width: 100%; 
+            margin-top: auto; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end; /* Đảm bảo chân chữ ký thẳng hàng */
+            border-top: 1px dashed #ffccd5; 
+            padding: 10px 0 20px 0; 
+            position: relative; 
+        }
         .sig-item { width: 45%; position: relative; }
-        .sig-label { font-size: 0.65rem; color: #888; margin-bottom: 5px; font-weight: bold; }
-        .ut-signature { font-family: 'Pinyon Script', cursive; font-size: 1.6rem; color: #222; border-bottom: 1.5px solid #333; height: 40px; display: flex; align-items: flex-end; padding-left: 5px; }
+        .sig-label { font-size: 0.6rem; color: #888; margin-bottom: 4px; font-weight: bold; }
+        
+        .ut-signature { 
+            font-family: 'Pinyon Script', cursive; 
+            font-size: 1.5rem; 
+            color: #222; 
+            border-bottom: 1.5px solid #333; 
+            height: 60px; /* Khớp chiều cao với vùng ký của Cún */
+            display: flex; 
+            align-items: flex-end; 
+            padding-left: 5px; 
+            box-sizing: border-box;
+        }
         
         .cun-signature-area { 
             border-bottom: 1.5px solid var(--primary-red); 
-            height: 40px; 
+            height: 60px; 
             background: rgba(230,0,18,0.02); 
             position: relative; 
             touch-action: none; 
-            z-index: 50; /* Đưa lên trên cùng để nhận cảm ứng nhó */
+            z-index: 50;
         }
-        #cunCanvas { 
-            width: 100%; 
-            height: 100%; 
-            display: block;
-            cursor: crosshair;
-        }
+        #cunCanvas { width: 100%; height: 100%; display: block; cursor: crosshair; }
 
         .stamp {
-            position: absolute; left: 50%; top: 20px; transform: translate(-50%, -50%) scale(0) rotate(-15deg);
-            width: 75px; height: 75px; border: 3px double rgba(230,0,18,0.25); border-radius: 50%;
+            position: absolute; left: 50%; top: 0px; transform: translate(-50%, -50%) scale(0) rotate(-15deg);
+            width: 75px; height: 75px; border: 2.5px double rgba(230,0,18,0.25); border-radius: 50%;
             display: flex; align-items: center; justify-content: center; color: rgba(230,0,18,0.25);
-            font-weight: bold; font-size: 0.65rem; text-align: center; transition: 0.6s; z-index: 1; opacity: 0;
-            pointer-events: none; /* Tránh cản trở việc ký */
+            font-weight: bold; font-size: 0.6rem; text-align: center; transition: 0.6s; z-index: 1; opacity: 0;
+            pointer-events: none;
         }
         .stamp.show { transform: translate(-50%, -50%) scale(1) rotate(-15deg); opacity: 0.6; }
 
@@ -135,12 +158,23 @@
         <div class="inner-paper">
             <div class="flower-branch flower-left"></div>
             <div class="flower-branch flower-right"></div>
+            
             <div class="count-in-box" id="countUp">Đang đếm ngày yêu...</div>
-            <img src="img/tim.png" style="width: 50px;">
-            <h1>Sổ Chứng Nhận Tình Yêu</h1>
+            
+            <img src="img/tim.png" style="width: 40px; margin-bottom: 2px;">
+            
+            <div class="cert-header">
+                <h1 class="cert-title">Sổ Chứng Nhận Tình Yêu</h1>
+                <p style="font-size: 0.75rem; color: #666; margin-top: 8px; font-weight: bold;">Tấm thiệp này chứng thực rằng</p>
+                <div class="divider">
+                    <span class="divider-heart">❤️</span>
+                </div>
+                <p class="cert-subtitle-bottom">chúng mình là cặp đôi ngọt ngào hạnh phúc nhất</p>
+            </div>
+            
             <div class="photo-frame"><img src="img/cun18.jpg"></div>
             <div class="names-box">Út ❤️ Cún</div>
-            <div class="desc-text">Út hứa sẽ luôn ở bên, bảo vệ và yêu thương Cún mỗi ngày. Mãi bên nhau nhó! ❤️</div>
+            <div class="desc-text">"Bằng tất cả sự chân thành và trái tim này, Út xin hứa: Sẽ luôn ở bên che chở, thấu hiểu và trân trọng Cún mỗi ngày. Út hứa sẽ không để Cún phải đối mặt với khó khăn một mình, sẽ cùng Cún chia sẻ mọi niềm vui, nỗi buồn và mỗi lúc cún stress :v. Chúng mình sẽ cùng nhau ăn cả thế giới, đi đến những nơi mà mình muốn, và dù có bất cứ chuyện xấu gì xảy ra thì anh vẫn mãi bên em khi em cần. forever together (Út Cún Cún) ❤️ ❤️"</div>
             
             <div class="sig-row">
                 <div class="sig-item">
@@ -153,7 +187,7 @@
                         <canvas id="cunCanvas"></canvas>
                     </div>
                 </div>
-                <div class="stamp" id="loveStamp">CHỨNG NHẬN<br>LOVE<br>2026</div>
+                <div class="stamp" id="loveStamp">CHỨNG NHẬN<br>LOVE</div>
             </div>
         </div>
     </div>
@@ -185,11 +219,10 @@
                     document.getElementById('envelope-wrapper').style.display = 'none';
                     document.body.classList.add('active');
                     setupCanvas();
-                }, 1000);
+                }, 800);
             }, 600);
         }
 
-        // Đếm ngày yêu từ 27/05/2025
         const startDate = new Date("2025-05-27"); 
         function updateCounter() {
             const days = Math.floor((new Date() - startDate) / (1000 * 60 * 60 * 24));
@@ -197,14 +230,12 @@
         }
         setInterval(updateCounter, 1000); updateCounter();
 
-        // FIX CHỮ KÝ: Tối ưu cảm ứng cho điện thoại
         const canvas = document.getElementById('cunCanvas');
         const ctx = canvas.getContext('2d');
         let drawing = false, hasSigned = false;
 
         function setupCanvas() {
             const rect = canvas.getBoundingClientRect();
-            // Thiết lập kích thước thực cho Canvas dựa trên hiển thị
             canvas.width = rect.width; 
             canvas.height = rect.height;
             ctx.strokeStyle = "#c2185b"; 
@@ -220,7 +251,6 @@
             return { x: clientX - rect.left, y: clientY - rect.top };
         }
 
-        // Sự kiện chuột & cảm ứng
         function startDraw(e) {
             e.preventDefault();
             drawing = true;
@@ -250,7 +280,6 @@
         canvas.addEventListener('touchstart', startDraw);
         canvas.addEventListener('touchmove', moveDraw);
         window.addEventListener('touchend', stopDraw);
-
         canvas.addEventListener('mousedown', startDraw);
         canvas.addEventListener('mousemove', moveDraw);
         window.addEventListener('mouseup', stopDraw);
