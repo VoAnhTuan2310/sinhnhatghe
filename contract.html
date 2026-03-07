@@ -13,6 +13,9 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             overflow: hidden; position: fixed; width: 100%; height: 100%;
         }
+        .outer-glow { background: white; width: 92vw; max-width: 380px; padding: 5px; border-radius: 8px; border: 10px solid transparent; border-image: url('https://img.freepik.com/free-vector/pink-floral-border-background-vector_53876-136302.jpg') 30 round; position: relative; box-sizing: border-box; z-index: 10; opacity: 0; transform: scale(0.9); transition: 0.8s; }
+        body.active .outer-glow { opacity: 1; transform: scale(1); }
+        .inner-paper { background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png'); border: 1px solid #ffe0e5; padding: 10px; display: flex; flex-direction: column; align-items: center; height: 78vh; position: relative; }
 
         /* 1. PHONG THƯ */
         #envelope-wrapper {
@@ -140,9 +143,9 @@
         }
 
         /* 4. CÁC NÚT BẤM */
-        #action-area { display: none; margin-top: 15px; width: 90%; z-index: 100; }
+        #action-area { display: none; margin-top: 10px; width: 90%; z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
         .btn-group { display: flex; gap: 10px; justify-content: center; }
-        .btn-main { flex: 1; padding: 12px; border-radius: 25px; border: none; color: white; font-weight: bold; font-size: 0.8rem; cursor: pointer; }
+        .btn-main { flex: 1; padding: 10px; border-radius: 20px; border: none; color: white; font-weight: bold; font-size: 0.75rem; cursor: pointer; }
     </style>
 </head>
 <body>

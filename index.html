@@ -6,21 +6,18 @@
     <title>Màn hình khóa tình yêu ❤️</title>
     <link rel="stylesheet" href="style_password.css">
     <style>
+        .main-card { 
+            width: 90%; max-width: 380px; height: auto; max-height: 92vh;
+            display: flex; flex-direction: column; justify-content: center;
+        }
+        .image-section img { max-height: 30vh; object-fit: cover; border-radius: 15px; }
+        .keypad { gap: 10px !important; margin-top: 10px; }
+        .key { width: 65px !important; height: 65px !important; font-size: 1.2rem !important; }
         /* CSS bổ sung để hiệu ứng chạy được */
-        .heart-effect {
-            position: fixed; font-size: 24px; pointer-events: none; z-index: 9999;
-            animation: flyUp 1s ease-out forwards;
-        }
-        @keyframes flyUp {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(-50%, -150px) scale(1.5); opacity: 0; }
-        }
+        .heart-effect { position: fixed; font-size: 24px; pointer-events: none; z-index: 9999; animation: flyUp 1s ease-out forwards; }
+        @keyframes flyUp { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150px) scale(1.5); opacity: 0; } }
         .shake { animation: shake 0.5s; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
     </style>
 </head>
 <body>

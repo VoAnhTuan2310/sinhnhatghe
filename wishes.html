@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title-text">Chạm vào ảnh để xem điều ước nhé ❤️</h1>
+        <h1 class="title-text">Chạm vào ảnh để xem lời chúc nhó ❤️</h1>
         
         <div class="wish-scatter" id="wishScatter"></div>
 
@@ -141,13 +141,15 @@
 
         // HÀM QUAN TRỌNG: Điều hướng có hướng dẫn
         function finishWishes() {
-    // Hiệu ứng chuyển cảnh mờ dần
-    document.body.style.opacity = '0';
-    document.body.style.transition = '1s';
-    setTimeout(() => {
-        window.location.href = 'gallery.html';
-    }, 1000);
-}
+            document.body.style.opacity = '0';
+            document.body.style.transition = '0.8s';
+            setTimeout(() => { window.location.href = 'gallery.html'; }, 800);
+        }
     </script>
+    <style>
+        /* Tối ưu Safe Area cho nút bấm dưới cùng */
+        .btn-final { bottom: calc(20px + env(safe-area-inset-bottom)) !important; }
+        .wish-item { width: 100px !important; } /* Thu nhỏ ảnh một chút cho vừa IP12 Pro */
+    </style>
 </body>
 </html>
